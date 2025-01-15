@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 상세</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #ff6f61;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .post-header {
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .post-header h2 {
+            margin: 0;
+            color: #ff6f61;
+        }
+        .post-header p {
+            margin: 5px 0;
+            color: #bbb;
+        }
+        .post-content {
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .comment-section {
+            margin-top: 30px;
+        }
+        .comment {
+            background-color: #333;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .comment p {
+            margin: 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff6f61;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #e8584f;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 게시물 제목 -->
+    <h1>게시글 상세</h1>
+
+    <!-- 게시물 정보 -->
+    <div class="post-header">
+        <h2 th:text="${post.title}">게시물 제목</h2>
+        <!-- <p>작성자: <span th:text="${post.writer}">작성자</span></p> -->
+        <!-- <p>작성일: <span th:text="${#dates.format(post.createdDate, 'yyyy-MM-dd HH:mm')}">작성일</span></p> -->
+    </div>
+
+    <!-- 게시물 내용 -->
+    <div class="post-content">
+        <p th:text="${post.content}">게시물 내용</p>
+    </div>
+
+    <!-- 댓글 섹션 -->
+    <div class="comment-section">
+        <h2>댓글</h2>
+
+        <!-- 댓글 리스트 -->
+        <div th:each="comment : ${post.comments}" class="comment">
+            <p><strong th:text="${comment.writer}">댓글 작성자</strong></p>
+            <p th:text="${comment.content}">댓글 내용</p>
+            <p style="color: #bbb; font-size: 0.9em;" th:text="${#dates.format(comment.createdDate, 'yyyy-MM-dd HH:mm')}">작성일</p>
+        </div>
+    </div>
+
+    <!-- 댓글 작성 -->
+    <form th:action="@{/posts/{id}/comments(id=${post.id})}" method="post" style="margin-top: 20px;">
+        <textarea name="content" rows="3" placeholder="댓글을 작성하세요..." style="width: 100%; border: 1px solid #444; background-color: #2a2a2a; color: #fff; padding: 10px; border-radius: 5px;"></textarea>
+        <button type="submit" class="btn" style="margin-top: 10px;">댓글 작성</button>
+    </form>
+
+    <!-- 버튼 섹션 -->
+    <div style="margin-top: 20px;">
+        <a th:href="@{/posts}" class="btn">목록으로</a>
+        <a th:href="@{/posts/edit/{id}(id=${post.id})}" class="btn">수정</a>
+        <form th:action="@{/posts/{id}/delete(id=${post.id})}" method="post" style="display: inline;">
+            <button type="submit" class="btn" style="background-color: #ff4f4f;">삭제</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
