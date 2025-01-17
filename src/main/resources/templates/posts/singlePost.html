@@ -108,10 +108,12 @@
     <div style="margin-top: 20px;">
         <a th:href="@{/posts}" class="btn">목록으로</a>
         <a th:href="@{/posts/edit/{id}(id=${post.id})}" class="btn">수정</a>
-        <form th:action="@{/posts/{id}/delete(id=${post.id})}" method="post" style="display: inline;">
-            <button type="submit" class="btn" style="background-color: #ff4f4f;">삭제</button>
+        <form th:action="@{/posts/delete/{id}(id=${post.id})}" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');">
+            <input type="hidden" name="_method" value="delete" />
+            <button type="submit" class="btn-delete" style="background-color: #ff4f4f;">삭제</button>
         </form>
     </div>
 </div>
+
 </body>
 </html>
