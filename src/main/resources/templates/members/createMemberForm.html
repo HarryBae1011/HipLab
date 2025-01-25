@@ -14,6 +14,7 @@
             <h1 class="text-center mb-4">Sign Up</h1>
             <!-- Form -->
             <form action="/members/new" method="post" th:object="${memberForm}">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
                 <!-- Name Field -->
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
