@@ -1,21 +1,18 @@
 package hip_pop.community.domain;
 
+import hip_pop.community.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-import java.time.LocalDate;
-
 @Entity
 @Getter
-public class Comment {
+public class Comment extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "comment_id")
     private Long Id;
 
     private String content;
-    private LocalDate createAt;
-    private LocalDate updateAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
