@@ -1,7 +1,7 @@
 package hip_pop.community.service;
 
 import hip_pop.community.domain.Member;
-import hip_pop.community.domain.MemberRole;
+import hip_pop.community.domain.enums.MemberRole;
 import hip_pop.community.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,4 +1,4 @@
-package hip_pop.community.domain;
+package hip_pop.community.domain.enums;
 
 import lombok.Getter;
 
