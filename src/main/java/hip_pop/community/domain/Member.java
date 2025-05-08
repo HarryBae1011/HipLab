@@ -1,5 +1,6 @@
 package hip_pop.community.domain;
 
+import hip_pop.community.domain.enums.MemberRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -21,6 +22,9 @@ public class Member {
 
     @NotEmpty
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private MemberRole memberRole;
 
     @OneToMany(mappedBy = "postMember")
     private List<Post> posts = new ArrayList<>();
