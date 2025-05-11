@@ -87,7 +87,7 @@
         <tr>
             <th>번호</th>
             <th>제목</th>
-            <!-- <th>작성자</th> -->
+            <th>작성자</th>
             <!-- <th>작성일</th> -->
             <th>보기</th>
         </tr>
@@ -97,7 +97,7 @@
         <tr th:each="post : ${posts}">
             <td th:text="${post.id}"></td>
             <td th:text="${post.title}"></td>
-            <!-- <td th:text="${post.writer}"></td> -->
+            <td th:text="${post.postMember.name}"></td>
             <!-- <td th:text="${#dates.format(post.createdDate, 'yyyy-MM-dd HH:mm')}"></td> -->
             <td>
                 <a th:href="@{/posts/{id}(id=${post.id})}">보기</a>

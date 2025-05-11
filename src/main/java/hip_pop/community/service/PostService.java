@@ -2,10 +2,8 @@ package hip_pop.community.service;
 
 import hip_pop.community.domain.Member;
 import hip_pop.community.domain.Post;
-import hip_pop.community.repository.CommentRepository;
 import hip_pop.community.repository.MemberRepository;
 import hip_pop.community.repository.PostRepository;
-import hip_pop.community.repository.PostSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,12 +22,9 @@ public class PostService {
      * 포스트 등록
      */
     @Transactional
-    public Long join(//Long memberId,
-                      String title, String content) {
-        //Member member = memberRepository.findOne(memberId);
+    public Long join(Member member, String title, String content) {
 
-        Post post = Post.createPost(title, content);
-        //post.setPostMember(member);
+        Post post = Post.createPost(title, content, member);
 
         postRepository.save(post);
 

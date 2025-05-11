@@ -1,15 +1,19 @@
 package hip_pop.community.controller;
 
+import hip_pop.community.domain.Member;
 import hip_pop.community.domain.Post;
+import hip_pop.community.service.MemberService;
 import hip_pop.community.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -18,6 +22,7 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    private final MemberService memberService;
 
     //전체 포스트 조회
     @GetMapping
@@ -38,6 +43,7 @@ public class PostController {
     }
 
     //새로운 포스트 폼
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/new")
     public String createPost(Model model) {
         model.addAttribute("postForm", new PostForm());
@@ -45,15 +51,17 @@ public class PostController {
     }
 
     //새로운 포스트 만들기
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/new")
-    public String create(//@RequestParam("memberId") Long memberId,
-                         @Valid PostForm form, BindingResult bindingResult) {
+    public String create(@Valid PostForm form, BindingResult bindingResult,
+                         Principal principal) throws Exception {
         if (bindingResult.hasErrors()) {
             return "posts/createPostForm";
         }
 
-        postService.join(//memberId,
-                         form.getTitle(), form.getContent());
+        Member member = memberService.getMember(principal.getName());
+
+        postService.join(member, form.getTitle(), form.getContent());
 
         return "redirect:/posts";
     }

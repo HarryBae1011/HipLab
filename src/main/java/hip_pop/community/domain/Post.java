@@ -28,10 +28,11 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
 
-    public static Post createPost(String title, String content) {
+    public static Post createPost(String title, String content, Member member) {
         Post post = new Post();
         post.setTitle(title);
         post.setContent(content);
+        post.setPostMember(member);
 
         return post;
     }
