@@ -77,7 +77,7 @@
     <!-- 게시물 정보 -->
     <div class="post-header">
         <h2 th:text="${post.title}">게시물 제목</h2>
-        <!-- <p>작성자: <span th:text="${post.writer}">작성자</span></p> -->
+        <p>작성자: <span th:text="${post.postMember.name}">작성자</span></p>
         <!-- <p>작성일: <span th:text="${#dates.format(post.createdDate, 'yyyy-MM-dd HH:mm')}">작성일</span></p> -->
     </div>
 
@@ -92,14 +92,14 @@
 
         <!-- 댓글 리스트 -->
         <div th:each="comment : ${post.comments}" class="comment">
-            <p><strong th:text="${comment.writer}">댓글 작성자</strong></p>
+            <p><strong th:text="${comment.commentMember.name}">댓글 작성자</strong></p>
             <p th:text="${comment.content}">댓글 내용</p>
-            <p style="color: #bbb; font-size: 0.9em;" th:text="${#dates.format(comment.createdDate, 'yyyy-MM-dd HH:mm')}">작성일</p>
+            <!-- <p style="color: #bbb; font-size: 0.9em;" th:text="${#dates.format(comment.createdDate, 'yyyy-MM-dd HH:mm')}">작성일</p> -->
         </div>
     </div>
 
     <!-- 댓글 작성 -->
-    <form th:action="@{/posts/{id}/comments(id=${post.id})}" method="post" style="margin-top: 20px;">
+    <form th:action="@{/posts/{postId}/comments(postId=${post.id})}" method="post" style="margin-top: 20px;">
         <textarea name="content" rows="3" placeholder="댓글을 작성하세요..." style="width: 100%; border: 1px solid #444; background-color: #2a2a2a; color: #fff; padding: 10px; border-radius: 5px;"></textarea>
         <button type="submit" class="btn" style="margin-top: 10px;">댓글 작성</button>
     </form>
