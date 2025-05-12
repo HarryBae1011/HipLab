@@ -3,9 +3,10 @@ package hip_pop.community.domain;
 import hip_pop.community.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Getter
+@Getter @Setter
 public class Comment extends BaseEntity {
 
     @Id @GeneratedValue
@@ -21,4 +22,15 @@ public class Comment extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+
+    public static Comment createComment(Post post, Member member, String content) {
+
+        Comment comment = new Comment();
+        comment.setPost(post);
+        comment.setCommentMember(member);
+        comment.setContent(content);
+
+        return comment;
+    }
 }
