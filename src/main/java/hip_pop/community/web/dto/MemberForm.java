@@ -1,4 +1,4 @@
-package hip_pop.community.controller;
+package hip_pop.community.web.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;

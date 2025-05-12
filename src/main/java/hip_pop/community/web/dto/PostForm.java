@@ -1,6 +1,5 @@
-package hip_pop.community.controller;
+package hip_pop.community.web.dto;
 
-import hip_pop.community.domain.Member;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
