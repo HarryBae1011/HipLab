@@ -1,4 +1,4 @@
-package hip_pop.community.controller;
+package hip_pop.community.web.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

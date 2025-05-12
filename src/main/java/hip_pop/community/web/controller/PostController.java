@@ -1,12 +1,13 @@
-package hip_pop.community.controller;
+package hip_pop.community.web.controller;
 
 import hip_pop.community.domain.Member;
 import hip_pop.community.domain.Post;
 import hip_pop.community.service.MemberService;
 import hip_pop.community.service.PostService;
+import hip_pop.community.web.dto.CommentForm;
+import hip_pop.community.web.dto.PostForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,6 +48,8 @@ public class PostController {
     @GetMapping("/new")
     public String createPost(Model model) {
         model.addAttribute("postForm", new PostForm());
+        model.addAttribute("commentForm", new CommentForm());
+
         return "posts/createPostForm";
     }
 

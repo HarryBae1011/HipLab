@@ -1,11 +1,12 @@
-package hip_pop.community.controller;
+package hip_pop.community.web.controller;
 
 import hip_pop.community.domain.Member;
+import hip_pop.community.domain.enums.MemberRole;
 import hip_pop.community.service.MemberService;
+import hip_pop.community.web.dto.MemberForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +43,7 @@ public class MemberController {
         Member member = new Member();
         member.setName(form.getName());
         member.setPassword(passwordEncoder.encode(form.getPassword()));
+        member.setMemberRole(MemberRole.MEMBER);
 
         memberService.join(member);
 
