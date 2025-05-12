@@ -1,3 +1,4 @@
+/*
 package hip_pop.community.config;
 
 import hip_pop.community.domain.Member;
@@ -9,28 +10,35 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Getter
 public class SecurityMemberDetails implements UserDetails {
 
-    private final Member member;
+    //private final Member member;
+
+    private final Long id;
+    private final String username;
+    private final String password;
+    private final String role;
 
     public SecurityMemberDetails(Member member) {
-        this.member = member;
+        this.id = member.getId();  // ID는 추후 사용 가능
+        this.username = member.getName();
+        this.password = member.getPassword();
+        this.role = member.getMemberRole().getValue(); // 예: "ROLE_USER"
     }
 
     @Override
     public String getUsername() {
-        return member.getName();
+        return username;
     }
 
     @Override
     public String getPassword() {
-        return member.getPassword();
+        return password;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(member.getMemberRole().getValue()));
+        return List.of(new SimpleGrantedAuthority(role));
     }
 
     @Override
@@ -54,3 +62,4 @@ public class SecurityMemberDetails implements UserDetails {
     }
 
 }
+ */

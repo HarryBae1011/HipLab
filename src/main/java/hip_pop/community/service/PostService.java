@@ -16,7 +16,6 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final MemberRepository memberRepository;
 
     /**
      * 포스트 등록
