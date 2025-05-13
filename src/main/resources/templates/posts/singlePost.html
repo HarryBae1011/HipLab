@@ -67,6 +67,41 @@
         .btn:hover {
             background-color: #e8584f;
         }
+        .menu-button {
+            background: none;
+            border: none;
+            color: #ccc;
+            font-size: 20px;
+            cursor: pointer;
+            position: absolute;
+            top: 5px;
+            right: 10px;
+        }
+        .menu-dropdown {
+            display: none;
+            position: absolute;
+            top: 30px;
+            right: 10px;
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 5px;
+            z-index: 10;
+        }
+        .menu-item {
+            background: none;
+            border: none;
+            color: #fff;
+            padding: 10px;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+        }
+        .menu-item:hover {
+            background-color: #444;
+        }
+        .comment-menu:hover .menu-dropdown {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -91,10 +126,24 @@
         <h2>댓글</h2>
 
         <!-- 댓글 리스트 -->
-        <div th:each="comment : ${post.comments}" class="comment">
+        <div th:each="comment : ${post.comments}" class="comment" style="position: relative">
             <p><strong th:text="${comment.commentMember.name}">댓글 작성자</strong></p>
             <p th:text="${comment.content}">댓글 내용</p>
             <!-- <p style="color: #bbb; font-size: 0.9em;" th:text="${#dates.format(comment.createdDate, 'yyyy-MM-dd HH:mm')}">작성일</p> -->
+
+            <!-- 댓글 삭제 버튼 (작성자 본인만 보이도록 처리하면 좋음) -->
+            <div th:if="${loginMember != null and loginMember.id == comment.commentMember.id}" class="comment-menu">
+                <button class="menu-button">⋯</button>
+                <div class="menu-dropdown">
+                    <form th:action="@{/posts/{postId}/comments/delete/{commentId}(postId=${post.id}, commentId=${comment.id})}"
+                          method="post"
+                          onsubmit="return confirm('이 댓글을 삭제하시겠습니까?');"
+                          style="margin-top: 5px;">
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit" class="menu-item">삭제</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
