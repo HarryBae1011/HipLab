@@ -74,8 +74,17 @@
 </head>
 <body>
 <h1>힙합 커뮤니티 게시판</h1>
-
 <div class="container">
+    <!-- 카테고리 필터 버튼 -->
+    <div class="mb-4">
+        <a th:href="@{/posts}" class="btn btn-outline-secondary me-2"
+           th:classappend="${selectedCategory == null} ? 'active'">전체</a>
+        <a th:each="cat : ${T(hip_pop.community.domain.enums.PostCategory).values()}"
+           th:href="@{/posts(category=${cat})}"
+           th:text="${cat.label}"
+           class="btn btn-outline-secondary me-2"
+           th:classappend="${selectedCategory == cat} ? 'active'">카테고리</a>
+    </div>
     <!-- 글 작성 버튼 -->
     <div style="text-align: right; margin-bottom: 10px;">
         <a th:href="@{/posts/new}" class="btn">새 글 작성</a>

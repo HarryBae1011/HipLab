@@ -1,6 +1,7 @@
 package hip_pop.community.repository;
 
 import hip_pop.community.domain.Post;
+import hip_pop.community.domain.enums.PostCategory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -33,4 +34,12 @@ public class PostRepository {
                 .setMaxResults(1000)
                 .getResultList();
     }
+
+    public List<Post> findByCategory(PostCategory category) {
+        return em.createQuery("select p from Post p where p.category = :category", Post.class)
+                .setParameter("category", category)
+                .setMaxResults(1000)
+                .getResultList();
+    }
+
 }

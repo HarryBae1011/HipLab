@@ -2,7 +2,7 @@ package hip_pop.community.service;
 
 import hip_pop.community.domain.Member;
 import hip_pop.community.domain.Post;
-import hip_pop.community.repository.MemberRepository;
+import hip_pop.community.domain.enums.PostCategory;
 import hip_pop.community.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,9 +21,9 @@ public class PostService {
      * 포스트 등록
      */
     @Transactional
-    public Long join(Member member, String title, String content) {
+    public Long join(PostCategory category, String title, String content, Member member) {
 
-        Post post = Post.createPost(title, content, member);
+        Post post = Post.createPost(category, title, content, member);
 
         postRepository.save(post);
 
@@ -45,7 +45,7 @@ public class PostService {
     /**
      * 전체 포스트 찾기
      */
-    public List<Post> findPosts() {
+    public List<Post> findAllPosts() {
         return postRepository.findAll();
     }
 
@@ -55,4 +55,12 @@ public class PostService {
     public Post findSinglePost(Long postId) {
         return postRepository.findOne(postId);
     }
+
+    /**
+     * 카테고리별 포스트 찾기
+     */
+    public List<Post> findPostByCategory(PostCategory category) {
+        return postRepository.findByCategory(category);
+    }
+
 }

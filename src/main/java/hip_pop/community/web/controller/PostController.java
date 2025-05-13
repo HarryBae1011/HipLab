@@ -2,9 +2,9 @@ package hip_pop.community.web.controller;
 
 import hip_pop.community.domain.Member;
 import hip_pop.community.domain.Post;
+import hip_pop.community.domain.enums.PostCategory;
 import hip_pop.community.service.MemberService;
 import hip_pop.community.service.PostService;
-import hip_pop.community.web.dto.CommentForm;
 import hip_pop.community.web.dto.PostForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,10 +27,18 @@ public class PostController {
 
     //전체 포스트 조회
     @GetMapping
-    public String getPosts(Model model) {
-        List<Post> findPosts = postService.findPosts();
+    public String getPosts(@RequestParam(required = false) PostCategory category,
+                           Model model) {
+        List<Post> posts;
 
-        model.addAttribute("posts", findPosts);
+        if (category != null) {
+            posts = postService.findPostByCategory(category);
+        } else {
+            posts = postService.findAllPosts();
+        }
+
+        model.addAttribute("posts", posts);
+        model.addAttribute("selectedCategory", category);
         return "posts/postList";
     }
 
@@ -51,7 +59,7 @@ public class PostController {
     @GetMapping("/new")
     public String createPost(Model model) {
         model.addAttribute("postForm", new PostForm());
-        model.addAttribute("commentForm", new CommentForm());
+        model.addAttribute("categories", PostCategory.values());
 
         return "posts/createPostForm";
     }
@@ -67,7 +75,7 @@ public class PostController {
 
         Member member = memberService.getMember(principal.getName());
 
-        postService.join(member, form.getTitle(), form.getContent());
+        postService.join(form.getCategory(), form.getTitle(), form.getContent(), member);
 
         return "redirect:/posts";
     }
