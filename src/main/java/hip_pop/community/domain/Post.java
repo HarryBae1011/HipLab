@@ -17,6 +17,7 @@ public class Post extends BaseEntity {
     @Column(name = "post_id")
     private Long Id;
 
+    @Enumerated(EnumType.STRING)
     private PostCategory category;
     private String title;
     private String content;
@@ -28,8 +29,9 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
 
-    public static Post createPost(String title, String content, Member member) {
+    public static Post createPost(PostCategory category, String title, String content, Member member) {
         Post post = new Post();
+        post.setCategory(category);
         post.setTitle(title);
         post.setContent(content);
         post.setPostMember(member);
