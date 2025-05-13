@@ -36,10 +36,13 @@ public class PostController {
 
     //단일 포스트 조회
     @GetMapping("/{postId}")
-    public String getSinglePost(@PathVariable("postId") Long postId, Model model) {
+    public String getSinglePost(@PathVariable("postId") Long postId, Model model,
+                                Principal principal) throws Exception {
         Post singlePost = postService.findSinglePost(postId);
+        Member findMember = memberService.getMember(principal.getName());
 
         model.addAttribute("post", singlePost);
+        model.addAttribute("loginMember", findMember);
         return "posts/singlePost";
     }
 
