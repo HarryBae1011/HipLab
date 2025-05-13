@@ -32,7 +32,7 @@ class PostServiceTest {
         Long savedMember = memberService.join(member);
 
         //when
-        postService.join(member.getId(), "제목", "컨텐츠");
+        postService.join(member, "제목", "컨텐츠");
 
 
         //then
