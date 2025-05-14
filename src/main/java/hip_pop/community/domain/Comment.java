@@ -15,6 +15,8 @@ public class Comment extends BaseEntity {
 
     private String content;
 
+    private Integer likes;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member commentMember;
