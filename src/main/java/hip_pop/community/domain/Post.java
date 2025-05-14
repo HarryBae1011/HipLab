@@ -22,6 +22,8 @@ public class Post extends BaseEntity {
     private String title;
     private String content;
 
+    private Integer likes;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member postMember;
