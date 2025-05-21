@@ -4,9 +4,10 @@ import hip_pop.community.domain.Member;
 import hip_pop.community.domain.Post;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Getter
+@Getter @Setter
 public class PostLikes {
 
     @Id @GeneratedValue
@@ -20,4 +21,12 @@ public class PostLikes {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    public static PostLikes createPostLike(Post post, Member member) {
+        PostLikes postLikes = new PostLikes();
+        postLikes.setPost(post);
+        postLikes.setMember(member);
+
+        return postLikes;
+    }
 }
