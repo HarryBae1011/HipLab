@@ -114,6 +114,14 @@
         <h2 th:text="${post.title}">게시물 제목</h2>
         <p>작성자: <span th:text="${post.postMember.name}">작성자</span></p>
         <!-- <p>작성일: <span th:text="${#dates.format(post.createdDate, 'yyyy-MM-dd HH:mm')}">작성일</span></p> -->
+
+        <!-- 게시글 좋아요 -->
+        <form th:action="@{/posts/{id}/like(id=${post.id})}" method="post" style="display: inline;">
+            <button type="submit" class="btn" style="padding: 5px 10px; font-size: 0.9em;">
+                ❤️ 좋아요
+                <span th:text="${post.likeCount}">0</span>
+            </button>
+        </form>
     </div>
 
     <!-- 게시물 내용 -->
@@ -130,6 +138,14 @@
             <p><strong th:text="${comment.commentMember.name}">댓글 작성자</strong></p>
             <p th:text="${comment.content}">댓글 내용</p>
             <!-- <p style="color: #bbb; font-size: 0.9em;" th:text="${#dates.format(comment.createdDate, 'yyyy-MM-dd HH:mm')}">작성일</p> -->
+
+            <!-- 댓글 좋아요 -->
+            <form th:action="@{/comments/{id}/like(id=${comment.id})}" method="post" style="margin-top: 5px;">
+                <button type="submit" class="btn" style="padding: 5px 10px; font-size: 0.8em;">
+                    👍 좋아요
+                    <span th:text="${comment.likeCount}">0</span>
+                </button>
+            </form>
 
             <!-- 댓글 삭제 버튼 (작성자 본인만 보이도록 처리하면 좋음) -->
             <div th:if="${loginMember != null and loginMember.id == comment.commentMember.id}" class="comment-menu">
