@@ -114,7 +114,7 @@ public class PostController {
         return "redirect:/posts";
     }
 
-    //포스트 좋아요 누르기
+    //포스트 좋아요 누르기 또는 좋아요 취소하기
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/{postId}/like")
     public String postLike(@PathVariable("postId") Long postId, Model model,
@@ -122,7 +122,7 @@ public class PostController {
         Post post = postService.findSinglePost(postId);
         Member member = memberService.getMember(principal.getName());
 
-        postLikeService.pressLike(post, member);
+        postLikeService.toggleLike(post, member);
         Integer likes = postLikeService.countLikes(postId);
         model.addAttribute("postLike", likes);
         return "redirect:/posts/{postId}";
