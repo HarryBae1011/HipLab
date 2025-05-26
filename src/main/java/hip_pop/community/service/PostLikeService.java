@@ -7,6 +7,8 @@ import hip_pop.community.repository.PostLikesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PostLikeService {
@@ -19,6 +21,14 @@ public class PostLikeService {
     public void pressLike(Post post, Member member) {
         PostLikes postLike = PostLikes.createPostLike(post, member);
         postLikesRepository.save(postLike);
+    }
+
+    /**
+     * 좋아요 개수 세기
+     */
+    public Integer countLikes(Long postId) {
+        List<PostLikes> postLikes = postLikesRepository.findAllByPostId(postId);
+        return postLikes.size();
     }
 
 

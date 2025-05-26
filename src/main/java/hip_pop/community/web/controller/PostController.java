@@ -4,6 +4,7 @@ import hip_pop.community.domain.Member;
 import hip_pop.community.domain.Post;
 import hip_pop.community.domain.enums.PostCategory;
 import hip_pop.community.service.MemberService;
+import hip_pop.community.service.PostLikeService;
 import hip_pop.community.service.PostService;
 import hip_pop.community.web.dto.PostForm;
 import jakarta.validation.Valid;
@@ -24,6 +25,7 @@ public class PostController {
 
     private final PostService postService;
     private final MemberService memberService;
+    private final PostLikeService postLikeService;
 
     //전체 포스트 조회
     @GetMapping
@@ -48,9 +50,11 @@ public class PostController {
                                 Principal principal) throws Exception {
         Post singlePost = postService.findSinglePost(postId);
         Member findMember = memberService.getMember(principal.getName());
+        Integer likes = postLikeService.countLikes(postId);
 
         model.addAttribute("post", singlePost);
         model.addAttribute("loginMember", findMember);
+        model.addAttribute("postLike", likes);
         return "posts/singlePost";
     }
 
@@ -108,5 +112,19 @@ public class PostController {
     public String deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
         return "redirect:/posts";
+    }
+
+    //포스트 좋아요 누르기
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/{postId}/like")
+    public String postLike(@PathVariable("postId") Long postId, Model model,
+                                Principal principal) throws Exception {
+        Post post = postService.findSinglePost(postId);
+        Member member = memberService.getMember(principal.getName());
+
+        postLikeService.pressLike(post, member);
+        Integer likes = postLikeService.countLikes(postId);
+        model.addAttribute("postLike", likes);
+        return "redirect:/posts/{postId}";
     }
 }

@@ -1,25 +1,12 @@
 package hip_pop.community.repository;
 
 import hip_pop.community.domain.mapping.PostLikes;
-import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-@RequiredArgsConstructor
-public class PostLikesRepository {
-
-    private final EntityManager em;
-
-    public void save(PostLikes postLikes) {
-        em.persist(postLikes);
-    }
-
-    public void delete(PostLikes postLikes) {
-        em.remove(postLikes);
-    }
-
-    public PostLikes findById(Long postLikeId) {
-        return em.find(PostLikes.class, postLikeId);
-    }
+public interface PostLikesRepository extends JpaRepository<PostLikes, Long> {
+    List<PostLikes> findAllByPostId(Long postId);
 }

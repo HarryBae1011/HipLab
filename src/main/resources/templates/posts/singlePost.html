@@ -116,10 +116,10 @@
         <!-- <p>작성일: <span th:text="${#dates.format(post.createdDate, 'yyyy-MM-dd HH:mm')}">작성일</span></p> -->
 
         <!-- 게시글 좋아요 -->
-        <form th:action="@{/posts/{id}/like(id=${post.id})}" method="post" style="display: inline;">
+        <form th:action="@{/posts/{postId}/like(postId=${post.id})}" method="post" style="display: inline;">
             <button type="submit" class="btn" style="padding: 5px 10px; font-size: 0.9em;">
                 ❤️ 좋아요
-                <span th:text="${post.likeCount}">0</span>
+                <span th:text="${postLike}">0</span>
             </button>
         </form>
     </div>
