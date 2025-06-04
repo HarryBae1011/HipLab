@@ -140,10 +140,10 @@
             <!-- <p style="color: #bbb; font-size: 0.9em;" th:text="${#dates.format(comment.createdDate, 'yyyy-MM-dd HH:mm')}">작성일</p> -->
 
             <!-- 댓글 좋아요 -->
-            <form th:action="@{/comments/{id}/like(id=${comment.id})}" method="post" style="margin-top: 5px;">
+            <form th:action="@{/posts/{postId}/comments/{commentId}/like(postId=${post.id}, commentId=${comment.id})}" method="post" style="margin-top: 5px;">
                 <button type="submit" class="btn" style="padding: 5px 10px; font-size: 0.8em;">
                     👍 좋아요
-                    <span th:text="${comment.likeCount}">0</span>
+                    <span th:text="${commentLike}">0</span>
                 </button>
             </form>
 
